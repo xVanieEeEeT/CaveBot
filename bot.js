@@ -222,7 +222,7 @@ client.on("message", (message) => {
 
 //cmddd Server. =server
 
-client.on('message', function(msg) {
+client.on('message', msg => {
     if(msg.content.startsWith (prefix + 'server')) {
       if(!msg.channel.guild) return msg.reply('**:x: اسف لكن هذا الامر للسيرفرات فقط **');
       let embed = new Discord.RichEmbed()
