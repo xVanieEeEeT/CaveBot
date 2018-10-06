@@ -1,8 +1,34 @@
+
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const prefix = "=";
-//
+const prefix = '='
 
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+client.user.setActivity("Hi",{type: 'WATCHING'})
+  console.log('')
+  console.log('')
+  console.log('╔[════════════════════════════════════════════════════════════════]╗')
+  console.log(`[Start] ${new Date()}`);
+  console.log('╚[═════════════════════════════════════════════════════════════════]╝')
+  console.log('')
+  console.log('╔[════════════════════════════════════]╗');
+  console.log(`Logged i as * [ " ${client.user.username} " ]`);
+  console.log('')
+  console.log('Informatins :')
+  console.log('')
+  console.log(`servers! [ " ${client.guilds.size} " ]`);
+  console.log(`Users! [ " ${client.users.size} " ]`);
+  console.log(`channels! [ " ${client.channels.size} " ]`);
+  console.log('╚[════════════════════════════════════]╝')
+  console.log('')
+  console.log('╔[════════════]╗')
+  console.log(' Bot Is Online')
+  console.log('╚[════════════]╝')
+  console.log('')
+  console.log('')
+});
 
 
 client.on('message', m => {
@@ -35,20 +61,7 @@ client.on('message', m => {
 
 
 
-client.on('guildMemberAdd', mem => {
-    let wlc = member.guild.channels.find('name', 'welcome');
-    let memavt = member.user.avatarURL
-        if (!channel) return;
-    let embed = new Discord.RichEmbed()
-        .setColor("RANDOM")
-        .setThumbnail(memavt)
-        .addField('آســمك :', `${member.user.username}`)
-        .addField('آنــت العضــو رقـم :', `${member.guild.memberCount}`)
-        .addField('آيـــدي الخــاص بـك :',"**[" + `${member.id}` + "]**")
-        .setFooter('الســيرفر :',"**" + `${member.guild.name}` + "**")
 
-        message.wlc.sendEmbed(embed);
-});
 
 client.on('guildMemberAdd', member => {
     let channel = member.guild.channels.find('name', 'welcome');
@@ -160,29 +173,21 @@ client.on('message', message => {
 });
  
 
-
-//cmddd Clear. =clear
 client.on('message', message => {
-    if (message.content.startsWith(prefix + 'clear')) {
-        if(message.channel.type === 'dm') return;
+    if(message.content.startsWith(prefix + 'clear')) {
+        if(message.channel.type == 'dm') return;
         if(message.member.hasPermissions('MANAGE_MESSAGES')) {
             message.channel.fetchMessages()
-               .then(list => {
+                .then(list => {
                     message.channel.bulkDelete(list)
                     .then(message.channel.send('```md\n# Chat has been cleard successfully.```'))
                     .then(msg => {
-                        msg.delete(5000);
+                        msg.delete(3000);
                     })
-                    
-                    
-                }, err => {message.channel.send("**Error. :x:**")})
-        } else {
-            return;
+                })
         }
     }
-
 });
-
 
 
 
@@ -971,7 +976,7 @@ client.on('message', message => {
 
 //cmddd Move. =move
 client.on('message', message => {
-    var prefix = "!";
+var prefix = '=';
 if(!message.channel.guild) return;
 if(message.content.startsWith(prefix + 'move')) {
  if (message.member.hasPermission("MOVE_MEMBERS")) {
@@ -1118,5 +1123,4 @@ client.on('message', message => {
    }
    });
 
-//
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN)
