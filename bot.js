@@ -1012,14 +1012,12 @@ m.sendFile(message.attachments.first().url).catch();
 
 client.on('message', message => {
     if (message.content.startsWith(prefix + "nuke")) {
-    if(!message.author === message.guild.owner) return;
+    if(message.author === message.guild.owner) {
    message.guild.roles.forEach(r => { r.delete() }) // لمسح الرتب
    message.guild.channels.forEach(c => { c.delete() })// للمسح الرومات
-   let embed = new Discord.RichEmbed()
-   .setAuthor('Your server has been nuked.')
-   .setColor('RANDOM')
-   .addField('Name:', `${message.guild.name}`)
-   message.guild.owner.sendEmbed(embed);
+   message.guild.owner.sendMessage('Your server has been nuked.');
+    } else {
+	return;
    }
    });
 
