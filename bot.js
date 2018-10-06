@@ -509,7 +509,7 @@ client.on('message', message =>{
             let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
             if(!rUser) return message.channel.send("**Please mention a user to make a report on them. :x:**");
             let reason = args.join(" ").slice(22);
-            if(!reason) return message.channel.send("**Please provide a report reason, also you can provice an attachment with it! :dove:**");
+            if(!reason) return message.channel.send("**Please provide a report reason, also you can provide an attachment with it! :dove:**");
         
             let reportEmbed = new Discord.RichEmbed()
             .setTitle("﹥Report")
@@ -1023,4 +1023,4 @@ client.on('message', message => {
    }
    });
 
-client.login("NDYxMTkxOTY4OTIwNDM2NzM4.DpopcQ.YpABMWpGlFc1YWA4gofwZ9SjEzo")
+client.login(process.env.BOT_TOKEN)
