@@ -1027,4 +1027,16 @@ client.on('message', message => {
         }
     });
 
+  client.on('message',async message => {
+var codes = message.guild.roles.filter( r=>r.name.toLowerCase().indexOf(message.content.toLowerCase().split(' ').slice(1).join(" ").toLowerCase())>-1 ).first(); 
+if(message.content.startsWith(prefix + "rrole")) {//بادئة الامر الاول
+await message.channel.send(`**__${codes}__ Has been taken from all members.**`);
+message.guild.members.forEach(m => {m.removeRole(codes)});
+}
+if(message.content.startsWith(prefix + "arole")) {//بادئة الامر الثاني
+await message.channel.send(`**__${codes}__ Has been given to all members.**`);
+message.guild.members.forEach(m => {m.addRole(codes)});
+}});
+  
+
 client.login(process.env.BOT_TOKEN);
