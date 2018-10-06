@@ -1022,7 +1022,7 @@ client.on('message', message => {
         if(message.content.startsWith(prefix + 'namemc')) {
             let args = message.content.split(' ').slice(1).join(' ');
             if (!args) return message.channel.send("**Please provide an mc username. :x:**");
-            var link = (`https://namemc.com/${args}`, 'namemc.png');
+            var link = (`https://namemc.com/${args}`);
             message.channel.send(link);
         }
     });
