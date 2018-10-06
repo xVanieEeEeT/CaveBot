@@ -1018,13 +1018,13 @@ client.on('message', message => {
     }
 });
 
-client.on('message', message => {
-    if(message.content.startsWith(prefix + 'namemc')) {
-        let args = message.content.split(' ').slice(1).join(' ');
-        if (!args) return message.channel.send("**Please provide an mc username. :x:**");
-        var image = new Discord.Attachment(`https://namemc.com/${args}`, 'namemc.png');
-        message.channel.send(image);
-    }
-});
+    client.on('message', message => {
+        if(message.content.startsWith(prefix + 'namemc')) {
+            let args = message.content.split(' ').slice(1).join(' ');
+            if (!args) return message.channel.send("**Please provide an mc username. :x:**");
+            var link = (`https://namemc.com/${args}`, 'namemc.png');
+            message.channel.send(link);
+        }
+    });
 
 client.login(process.env.BOT_TOKEN);
