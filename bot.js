@@ -792,7 +792,7 @@ client.on('message', message => {
             .addField("**__=lockchannel__**","**عمل ميوت للروم كامل**")
             .addField("**__=unlockchannel__**","**فك الميوت عن الروم كامل**")
             .addField("**__=roles__**","**لعرض كافة الرتب في السيرفر**")
-            .addField("**__=nuke__","**اعادة تهيئة السيرفر مسح جميع الرومات والرتب، اونر السيرفر فقط**")
+            .addField("**__=nuke__**","**اعادة تهيئة السيرفر مسح جميع الرومات والرتب، اونر السيرفر فقط**")
             message.member.sendEmbed(embed)
             message.delete();
             })
