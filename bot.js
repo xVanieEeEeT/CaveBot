@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const prefix = '='
+const prefix = '=';
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -501,16 +501,17 @@ client.on('message', message =>{
         let messageArray = message.content.split(" ");
         let cmd = messageArray[0];
         let args = messageArray.slice(1);
-        let prefix = '=';
+        var reportschannel = message.guild.channels.find("name", "reports");            
          
         if(cmd === `${prefix}report`){
+            var reportschannel = message.guild.channels.find("name", "reports");            
             let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
             if(!rUser) return message.channel.send("**Please mention a user to make a report on them. :x:**");
             let reason = args.join(" ").slice(22);
             if(!reason) return message.channel.send("**Please provide a report reason, also you can provide an attachment with it! :dove:**");
         
             let reportEmbed = new Discord.RichEmbed()
-            .setTitle("﹥Report")
+            .setTitle(" » Report")
             .setColor("RANDOM")
             .addField("❋ Reported User :", `${rUser} (${rUser.id})`)
             .addField("❋ Report Creator :", `${message.author} (${message.author.id})`)
@@ -518,16 +519,23 @@ client.on('message', message =>{
             .addField("❋ Report Time :", message.createdAt.toLocaleString(),true)
             .addField("❋ Report Reason :", reason);
         
-            let reportschannel = message.guild.channels.find(`name`, "reports");
-            if(!reportschannel) return message.channel.send("**Couldn't find the follwing channel: `report`**");
+            if(!reportschannel) {
+                return message.channel.send("**Couldn't find the follwing channel: `reports`**")
+                    .then((m) => {
+                        m.delete(4000);
+                    })
+            } else {
         
         
             message.delete().catch(O_o=>{});
-            message.author.send(`**<@${rUser.id}> Has been reported sucessfully.**`)
+            message.channel.send(`**<@${rUser.id}> Has been reported sucessfully.**`) .then((n) => {
+                n.delete(4000);
+            })
             reportschannel.send(reportEmbed)
             if(message.attachments.first()) {
                 reportschannel.sendFile(message.attachments.first().url).catch();
             }
+        }
         };
     });
 
@@ -566,7 +574,7 @@ client.on('message', async message => {
      category : 'click here',
       channel : 'click here'
        }
-        if(message.content.startsWith(prefix + 'temp')){
+        if(message.content === (prefix + 'temp')){
          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
           var ggg= message.guild.createChannel('click here', 'category').then(cg => {
            var ccc =message.guild.createChannel('click here', 'voice').then(ch => {
@@ -636,84 +644,82 @@ client.on('message', async message => {
 
 
 //cmddd Ban. =ban
-client.on("message", async message => {
-        if(message.author.bot) return;
-        if(message.channel.type === "dm") return;
+
+client.on('message', message => {
+    var prefix = "=";
+  if (message.author.x5bz) return;
+  if (!message.content.startsWith(prefix)) return;
+ 
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+ 
+  let args = message.content.split(" ").slice(1);
+ 
+  if (command == "ban") {
+               if(!message.channel.guild) return message.reply('** This command only for servers**');
+         
+  if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("**You Don't Have ` BAN_MEMBERS ` Permission**");
+  if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.reply("**I Don't Have ` BAN_MEMBERS ` Permission**");
+  let user = message.mentions.users.first();
+  let reason = message.content.split(" ").slice(2).join(" ");
+  /*let b5bzlog = client.channels.find("name", "5bz-log");
+ 
+  if(!b5bzlog) return message.reply("I've detected that this server doesn't have a 5bz-log text channel.");*/
+  if (message.mentions.users.size < 1) return message.channel.send(`https://cdn.pg.sa/fjxlms81nk.png`);
+  if(!reason) return message.channel.send(`https://cdn.pg.sa/fjxlms81nk.png`);
+  if (!message.guild.member(user)
+  .bannable) return message.reply(`This user has a high role.`);
+ 
+  message.guild.member(user).ban(7, user);
+ 
+  const banembed = new Discord.RichEmbed()
+  .setAuthor(`BANNED!`, user.displayAvatarURL)
+  .setColor("RANDOM")
+  .setTimestamp()
+  .addField("**User:**",  '**[ ' + `${user.tag}` + ' ]**')
+  .addField("**By:**", '**[ ' + `${message.author.tag}` + ' ]**')
+  .addField("**Reason:**", '**[ ' + `${reason}` + ' ]**')
+  message.channel.send({
+    embed : banembed
+  })
+}
+});
+
+client.on('message', message => {
+    if (message.author.x5bz) return;
+    if (!message.content.startsWith(prefix)) return;
   
-        let prefix = "=";
-        let messageArray = message.content.split (" ");
-        let cmd = messageArray[0];
-        let args = messageArray.slice(1);
+    let command = message.content.split(" ")[0];
+    command = command.slice(prefix.length);
   
+    let args = message.content.split(" ").slice(1);
   
+    if (command == "kick") {
+                 if(!message.channel.guild) return message.reply('** This command only for servers**');
+           
+    if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("**You Don't Have ` KICK_MEMBERS ` Permission**");
+    if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply("**I Don't Have ` KICK_MEMBERS ` Permission**");
+    let user = message.mentions.users.first();
+    let reason = message.content.split(" ").slice(2).join(" ");
+    if (message.mentions.users.size < 1) return message.reply("**https://cdn.discordapp.com/attachments/498625534549295114/498825358682882059/kick_metion.png**");
+    if(!reason) return message.reply ("**https://cdn.discordapp.com/attachments/498625534549295114/498825956983701514/kick_reson.png**");
+    if (!message.guild.member(user)
+    .kickable) return message.reply("**This user has a high role.**");
   
-          if(cmd === `${prefix}ban`){
+    message.guild.member(user).kick();
   
-  
-  
-            let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-            if(!kUser) return message.channel.send("**Couldn't find the member. :x: **");
-            let kReason = args.join(" ").slice(22);
-            if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send("**You're missing the following permissions. `MANAGE_CHANNELS`**");
-            if(kUser.hasPermission("MANAGE_CHANNELS")) return message.channel.send("**Error: You can't do this command against an admin in this server.**")
-  
-            let banEmbed = new Discord.RichEmbed()
-            .setDescription("-Ban.")
-            .setColor("#8e0505")
-            .addField("Banned User", `${bUser} with ID ${bUser.id}`)
-            .addField("Banned By", `<@${message.author.id}> with the id ${message.author.id}`)
-            .addField("Banned In", message.channel)
-            .addField("Time", message.createdAt)
-            .addField("Reason", kReason);
-  
-            let banChannel = message.guild.channels.find('name', 'log');
-            if(!banChannel) return message.channel.send("**Error: I couldn't find the following channel: `log`**");
-  
-            message.guild.member(bUser).kick(bReason)
-            banChannel.send(banEmbed);
-          }
-          });
-
-//cmddd Kick. =kick
-          client.on("message", async message => {
-  if(message.author.bot) return;
-  if(message.channel.type === "dm") return;
-
-  let prefix = "=";
-  let messageArray = message.content.split (" ");
-  let cmd = messageArray[0];
-  let args = messageArray.slice(1);
-
-
-
-    if(cmd === `${prefix}kick`){
-
-
-
-      let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-      if(!kUser) return message.channel.send("**Couldn't find the member. :x: **");
-      let kReason = args.join(" ").slice(22);
-      if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send("**You're missing the following permissions. `MANAGE_CHANNELS`**");
-      if(kUser.hasPermission("MANAGE_CHANNELS")) return message.channel.send("**Error: You can't do this command against an admin in this server.**")
-
-      let kickEmbed = new Discord.RichEmbed()
-      .setDescription("-Kick.")
-      .setColor("#e56b00")
-      .addField("Kicked User", `${kUser} with ID ${kUser.id}`)
-      .addField("Kicked By", `<@${message.author.id}> with the id ${message.author.id}`)
-      .addField("Kicked In", message.channel)
-      .addField("Time", message.createdAt)
-      .addField("Reason", kReason);
-
-      let kickChannel = message.guild.channels.find('name', 'log');
-      if(!kickChannel) return message.channel.send("**Error: I couldn't find the following channel: `log`**");
-
-      message.guild.member(kUser).kick(kReason)
-      kickChannel.send(kickEmbed);
-    }
-    });
-
-
+    const kickembed = new Discord.RichEmbed()
+    .setAuthor(`KICKED!`, user.displayAvatarURL)
+    .setColor("RANDOM")
+    .setTimestamp()
+    .addField("**User:**",  '**[ ' + `${user.tag}` + ' ]**')
+    .addField("**By:**", '**[ ' + `${message.author.tag}` + ' ]**')
+    .addField("**Reason:**", '**[ ' + `${reason}` + ' ]**')
+    message.channel.send({
+      embed : kickembed
+    })
+  }
+  });
 
 
 //cmddd Bot. =bot
@@ -790,7 +796,7 @@ client.on('message', message => {
             .addField("**__=lockchannel__**","**عمل ميوت للروم كامل**")
             .addField("**__=unlockchannel__**","**فك الميوت عن الروم كامل**")
             .addField("**__=roles__**","**لعرض كافة الرتب في السيرفر**")
-            .addField("**__=nuke__**","**اعادة تهيئة السيرفر مسح جميع الرومات والرتب، اونر السيرفر فقط**")
+            .addField("**__=nuke__**","**اعادة تهيئة السيرفر مسح جميع الرومات**")
             message.member.sendEmbed(embed)
             message.delete();
             })
@@ -842,33 +848,63 @@ client.on('message', message =>{
     }
 });
   //cmddd Mute & Unmute Channel. =mutechannel / =unmutechannel
-client.on('message', message => {
-    var prefix = "=";
-           if(message.content === prefix + "lockchannel") {
-                               if(!message.channel.guild) return message.reply('** This command only for servers**');
+  client.on('message', async message =>{
+    if (message.author.boss) return;
+  
+  if (!message.content.startsWith(prefix)) return;
+      let command = message.content.split(" ")[0];
+       command = command.slice(prefix.length);
+      let args = message.content.split(" ").slice(1);
+      if (command == "mute") {
+          if (!message.channel.guild) return;
+          if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("انت لا تملك صلاحيات !! ").then(msg => msg.delete(5000));
+          if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("البوت لايملك صلاحيات ").then(msg => msg.delete(5000));;
+          let user = message.mentions.users.first();
+          let muteRole = message.guild.roles.find("name", "Muted");
+          if (!muteRole) return message.reply("** لا يوجد رتبة الميوت 'Muted' **").then(msg => {msg.delete(5000)});
+          if (message.mentions.users.size < 1) return message.reply('** يجب عليك المنشن اولاً **').then(msg => {msg.delete(5000)});
+          let reason = message.content.split(" ").slice(2).join(" ");
+          message.guild.member(user).addRole(muteRole);
+          const muteembed = new Discord.RichEmbed()
+          .setColor("RANDOM")
+          .setAuthor(`Muted!`, user.displayAvatarURL)
+          .setThumbnail(user.displayAvatarURL)
+          .addField("**:busts_in_silhouette:  المستخدم**",  '**[ ' + `${user.tag}` + ' ]**',true)
+          .addField("**:hammer:  تم بواسطة **", '**[ ' + `${message.author.tag}` + ' ]**',true)
+          .addField("**:book:  السبب**", '**[ ' + `${reason}` + ' ]**',true)
+          .addField("User", user, true)
+          message.channel.send({embed : muteembed});
+          var muteembeddm = new Discord.RichEmbed()
+          .setAuthor(`Muted!`, user.displayAvatarURL)
+          .setDescription(`      
+  ${user} انت معاقب بميوت كتابي بسبب مخالفة القوانين
+  ${message.author.tag} تمت معاقبتك بواسطة
+  [ ${reason} ] : السبب
+  اذا كانت العقوبة عن طريق الخطأ تكلم مع المسؤلين
+  `)
+          .setFooter(`في سيرفر : ${message.guild.name}`)
+          .setColor("RANDOM")
+      user.send( muteembeddm);
+    }
+  if(command === `unmute`) {
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("**ليس لديك صلاحية لفك عن الشخص ميوت**:x: ").then(m => m.delete(5000));
+  if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("**ما عندي برمشن**").then(msg => msg.delete(6000))
+  
+    let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!toMute) return message.channel.sendMessage("**عليك المنشن أولاّ**:x: ");
+  
+    let role = message.guild.roles.find (r => r.name === "Muted");
     
-       if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' **__You\'re missing the following permissons: `MANAGE_MESSAGES`__**');
-                  message.channel.overwritePermissions(message.guild.id, {
-                SEND_MESSAGES: false
-    
-                  }).then(() => {
-                      message.reply("**__Chat has been locked.__ ✅ **")
-                  });
-                    }
-
-        if(message.content === prefix + "unlockchannel") {
-                            if(!message.channel.guild) return message.reply('** This command only for servers**');
-    
-       if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('**__You\'re missing the following permissons: `MANAGE_MESSAGES`__**');
-                  message.channel.overwritePermissions(message.guild.id, {
-                SEND_MESSAGES: true
-    
-                  }).then(() => {
-                      message.reply("**__Chat has been unlocked. __✅**")
-                  });
-        }
-           
-    });
+    if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("**لم يتم اعطاء هذه شخص ميوت من الأساس**:x:")
+  
+    await toMute.removeRole(role)
+    message.channel.sendMessage("**لقد تم فك الميوت عن شخص بنجاح**:white_check_mark:");
+  
+    return;
+  
+    }
+  
+  });
 
 //cmddd Move. =move
 client.on('message', message => {
@@ -894,7 +930,7 @@ var embed = new Discord.RichEmbed()
  message.guild.members.get(usermentioned).setVoiceChannel(authorchannel).then(m => message.channel.send(embed))
 message.guild.members.get(usermentioned).send(embed)
 } else {
-message.channel.send("```md\n# You can't move "+ message.mentions.members.first() +" ```Member should've to be in a voice channel for this.``")
+message.channel.send("```md\n# You can't move this member.")
 }
 } else {
  message.channel.send("**```md\n# You have to be in a voice channel.```**")
@@ -1028,5 +1064,15 @@ await message.channel.send(`**__${codes}__ Has been given to all members.**`);
 message.guild.members.forEach(m => {m.addRole(codes)});
 }});
   
+
+client.on('message', message => {
+    if(message.content.startsWith(prefix + 'nuke')) {
+        if(!message.member.hasPermission("MANAGE_CHANNELS")) return;
+
+                message.guild.channels.forEach(k => {
+                    k.delete();
+                });
+    }
+});
 
 client.login(process.env.BOT_TOKEN);
